@@ -3,7 +3,7 @@ from ._allegro import Allegro_Module
 from .edgewise import EdgewiseReduce
 from ._edgeembed import ProductTypeEmbedding
 from .scalarembed import TwoBodyBesselScalarEmbed, TwoBodySplineScalarEmbed
-from .tensorembed import TwoBodySphericalHarmonicTensorEmbed
+from .tensorembed import TwoBodyCartesianHarmonicTensorEmbed
 
 __all__ = [
     "Allegro_Module",
@@ -11,5 +11,5 @@ __all__ = [
     "ProductTypeEmbedding",
     "TwoBodyBesselScalarEmbed",
     "TwoBodySplineScalarEmbed",
-    "TwoBodySphericalHarmonicTensorEmbed",
+    "TwoBodyCartesianHarmonicTensorEmbed",
 ]

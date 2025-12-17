@@ -7,6 +7,16 @@
 [![Documentation Status](https://readthedocs.org/projects/allegro/badge/?version=latest)](https://allegro.readthedocs.io/en/latest/?badge=latest)
 [![PyPI version](https://img.shields.io/pypi/v/nequip-allegro.svg)](https://pypi.python.org/pypi/nequip-allegro/)
 
+# About Cartesian Allegro
+
+This approach is based on the `cartnn` package  
+<https://github.com/xvzemin/tace>
+
+It adopts **cartesian-3j**, replacing the spherical tensor product with the **Irreducible Cartesian Tensor Product (ICTP)**, and **does not use ICTC** in the implementation.
+
+This method is only recommended for exploratory research by those interested in the underlying theory or implementation details, and is not recommended for practical production use.
+
+The input file is the same as the original Allegro input file. It can use compiled for acceleration, but it has not been tested whether other acceleration libraries can also be used.
 
 # Allegro
 

@@ -1,8 +1,8 @@
 # This file is a part of the `allegro` package. Please see LICENSE and README at the root for information on using it.
 import math
 import torch
-from e3nn.o3._irreps import Irreps
-from e3nn.o3._wigner import wigner_3j
+from cartnn.o3._irreps import Irreps
+from cartnn.o3._zemin import cartesian_3j
 from nequip.nn import scatter, replace_submodules, model_modifier
 from nequip.utils.dtype import torch_default_dtype
 from typing import List, Tuple, Optional
@@ -92,7 +92,7 @@ class Contracter(torch.nn.Module):
             assert ir_in1.p * ir_in2.p == ir_out.p
             assert abs(ir_in1.l - ir_in2.l) <= ir_out.l <= ir_in1.l + ir_in2.l
 
-            this_w3j = wigner_3j(ir_in1.l, ir_in2.l, ir_out.l)
+            this_w3j = cartesian_3j(ir_in1.l, ir_in2.l, ir_out.l)
             this_w3j_index = this_w3j.nonzero()
             w3j_values.append(
                 this_w3j[

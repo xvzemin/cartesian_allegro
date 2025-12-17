@@ -5,8 +5,8 @@ import functools
 
 import torch
 
-from e3nn.o3._irreps import Irrep, Irreps
-from e3nn.util.jit import compile_mode
+from cartnn.o3._irreps import Irrep, Irreps
+from cartnn.util.jit import compile_mode
 
 from nequip.data import AtomicDataDict
 from nequip.nn import GraphModuleMixin, ScalarMLPFunction, tp_path_exists

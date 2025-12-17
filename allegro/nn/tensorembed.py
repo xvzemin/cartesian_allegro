@@ -1,9 +1,9 @@
 # This file is a part of the `allegro` package. Please see LICENSE and README at the root for information on using it.
 import torch
 
-from e3nn.o3._irreps import Irreps
-from e3nn.o3._spherical_harmonics import SphericalHarmonics
-from e3nn.util.jit import compile_mode
+from cartnn.o3._irreps import Irreps
+from cartnn.o3._cartesian_harmonics import CartesianHarmonics
+from cartnn.util.jit import compile_mode
 
 from nequip.data import AtomicDataDict
 from nequip.nn import GraphModuleMixin, ScalarMLPFunction, with_edge_vectors_
@@ -14,14 +14,14 @@ from typing import Union
 
 
 @compile_mode("script")
-class TwoBodySphericalHarmonicTensorEmbed(GraphModuleMixin, torch.nn.Module):
+class TwoBodyCartesianHarmonicTensorEmbed(GraphModuleMixin, torch.nn.Module):
     """Construct two-body tensor embedding as weighted spherical harmonics.
 
     Constructs tensor basis as spherical harmonic projections of edge vectors,
     and tensor embedding as weighted tensor basis (weights learnt from scalar embedding).
 
     Args:
-        irreps_edge_sh (int, str, or o3.Irreps): if int, will be treated as lmax for o3.Irreps.spherical_harmonics(lmax)
+        irreps_edge_sh (int, str, or o3.Irreps): if int, will be treated as lmax for o3.Irreps.cartesian_harmonics(lmax)
         num_tensor_features (int): number of tensor feature channels
     """
 
@@ -52,8 +52,11 @@ class TwoBodySphericalHarmonicTensorEmbed(GraphModuleMixin, torch.nn.Module):
             irreps_edge_sh = Irreps.spherical_harmonics(irreps_edge_sh)
         else:
             irreps_edge_sh = Irreps(irreps_edge_sh)
-        self.sh = SphericalHarmonics(
-            irreps_edge_sh, edge_sh_normalize, edge_sh_normalization
+        self.ch = CartesianHarmonics(
+            irreps_out=irreps_edge_sh, 
+            normalize=edge_sh_normalize, 
+            norm=True, 
+            traceless=True
         )
         self._init_irreps(
             irreps_in=irreps_in,
@@ -89,7 +92,7 @@ class TwoBodySphericalHarmonicTensorEmbed(GraphModuleMixin, torch.nn.Module):
         weights = self.env_embed_linear(edge_invariants)
         # store unweighted spherical harmonics embedding as two-body tensor basis
         edge_vec = data[AtomicDataDict.EDGE_VECTORS_KEY]
-        edge_sh = self.sh(edge_vec).to(self._output_dtype)
+        edge_sh = self.ch(edge_vec).to(self._output_dtype)
         data[self.tensor_basis_out_field] = edge_sh
         # store two-body tensor features (weighted spherical harmonics embedding)
         data[self.tensor_embedding_out_field] = self._edge_weighter(edge_sh, weights)

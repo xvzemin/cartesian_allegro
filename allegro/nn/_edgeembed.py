@@ -1,8 +1,8 @@
 # This file is a part of the `allegro` package. Please see LICENSE and README at the root for information on using it.
 import torch
 
-from e3nn.o3._irreps import Irreps
-from e3nn.util.jit import compile_mode
+from cartnn.o3._irreps import Irreps
+from cartnn.util.jit import compile_mode
 
 from nequip.data import AtomicDataDict
 from nequip.nn import GraphModuleMixin, ScalarMLPFunction

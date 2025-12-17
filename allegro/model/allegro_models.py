@@ -1,6 +1,6 @@
 # This file is a part of the `allegro` package. Please see LICENSE and README at the root for information on using it.
 import math
-from e3nn import o3
+from cartnn import o3
 
 from nequip.data import AtomicDataDict
 from nequip.model import model_builder
@@ -18,7 +18,7 @@ from nequip.nn.embedding import (
     PolynomialCutoff,
 )
 from allegro.nn import (
-    TwoBodySphericalHarmonicTensorEmbed,
+    TwoBodyCartesianHarmonicTensorEmbed,
     EdgewiseReduce,
     Allegro_Module,
 )
@@ -73,7 +73,7 @@ def AllegroEnergyModel(
     parity: bool = True,
     **kwargs,
 ):
-    irreps_edge_sh = repr(o3.Irreps.spherical_harmonics(l_max, p=-1))
+    irreps_edge_sh = repr(o3.Irreps.cartesian_harmonics(l_max, p=-1))
     # set tensor_track_allowed_irreps
     # note that it is treated as a set, so order doesn't really matter
     if parity:
@@ -183,7 +183,7 @@ def FullAllegroEnergyModel(
     )
 
     # === two-body tensor embedding ===
-    tensor_embed = TwoBodySphericalHarmonicTensorEmbed(
+    tensor_embed = TwoBodyCartesianHarmonicTensorEmbed(
         irreps_edge_sh=irreps_edge_sh,
         num_tensor_features=num_tensor_features,
         forward_weight_init=forward_normalize,

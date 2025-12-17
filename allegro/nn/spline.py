@@ -1,7 +1,7 @@
 # This file is a part of the `allegro` package. Please see LICENSE and README at the root for information on using it.
 from math import pi
 import torch
-from e3nn.util.jit import compile_mode
+from cartnn.util.jit import compile_mode
 from nequip.utils.global_dtype import _GLOBAL_DTYPE
 
 
